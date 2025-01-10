@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- ...existing code... -->
+  <title>Blog Details</title>
+  <style>
+    .blog-details {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    .blog-details h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .blog-date {
+      color: #888;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+
+    .blog-content {
+      font-size: 1.2em;
+      margin-bottom: 30px;
+    }
+
+    .blog-author {
+      font-size: 1em;
+      color: #555;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+
+    .blog-thumbnails {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .blog-thumbnails img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .blog-thumbnails img.active {
+      border-color: #000;
+    }
+
+    .blog-main-image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+
+    .go-back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .go-back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <script>
+    function switchImage(url) {
+      document.getElementById('mainImage').src = url;
+      const thumbnails = document.querySelectorAll('.blog-thumbnails img');
+      thumbnails.forEach(img => img.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+  <!-- ...existing code... -->
+</head>
+
+<body>
+  <!-- ...existing code... -->
+  <div class="blog-details">
+    <a href="/blog" class="go-back-button">Go Back</a>
+    <h1><%= blog.title %></h1>
+    <p class="blog-date"><%= blog.date %></p>
+    <div class="blog-thumbnails">
+      <% blog.images.forEach(function(image, index) { %>
+      <img src="<%= image %>" onclick="switchImage('<%= image %>')" class="<%= index === 0 ? 'active' : '' %>">
+      <% }); %>
+    </div>
+    <img id="mainImage" src="<%= blog.images[0] %>" class="blog-main-image">
+    <div class="blog-content">
+      <%= blog.content %>
+    </div>
+    <!-- <div class="blog-author">
+      <p>Written by: <%= blog.author %></p>
+    </div> -->
+  </div>
+  <!-- ...existing code... -->
+</body>
+
+</html>

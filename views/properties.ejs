@@ -155,7 +155,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <% properties.forEach(function(property) { %>
         <a href="/property/<%= property._id %>" class="block bg-white rounded-lg shadow-md overflow-hidden">
-          <img src="/images/uploads/<%= property.Images[0] %>" alt="<%= property.title %>" class="w-full h-48 object-cover">
+          <img src="<%= property.Images[0] || 'default.jpg' %>" alt="<%= property.title %>" class="w-full h-48 object-cover">
           <div class="p-4">
             <h2 class="text-lg font-bold text-gray-800"><%= property.title %></h2>
             <p class="text-gray-600"><%= property.location %></p>

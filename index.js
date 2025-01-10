@@ -11,13 +11,29 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const blogModel = require("./models/blog-model");
 require("dotenv").config();
+
+const S3_BUCKET_NAME=process.env.S3_BUCKET_NAME
+const S3_BUCKET_REGION=process.env.S3_BUCKET_REGION
+const S3_BUCKET_ACCESS_KEY=process.env.S3_BUCKET_ACCESS_KEY
+const S3_BUCKET_SECRET_ACCESS_KEY=process.env.S3_BUCKET_SECRET_ACCESS_KEY
+
+const s3=new S3Client({
+  credentials:{
+    accessKeyId: S3_BUCKET_ACCESS_KEY,
+    secretAccessKey:S3_BUCKET_SECRET_ACCESS_KEY
+  },
+  region: S3_BUCKET_REGION
+})
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+
 // app.use("/images/uploads/properties", express.static(path.join(__dirname, "public/images/uploads/properties")));
 // app.use("/images/uploads/blogs", express.static(path.join(__dirname, "public/images/uploads/blogs")));
 // // app.use("images/uploads/content-images", express.static(path.join(__dirname, "public/images/uploads/content-images")));
@@ -99,6 +115,15 @@ app.get("/property/:id", async (req, res) => {
   try {
     const property = await propertyModel.findById(req.params.id);
     res.render("propertyDetail", { property });
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.get("/blog-details/:id", async (req, res) => {
+  try {
+    const blog = await blogModel.findById(req.params.id);
+    res.render("blogDetails", { blog });
   } catch (err) {
     res.status(500).send(err);
   }
@@ -208,12 +233,38 @@ app.post(
         price,
       } = req.body;
 
-      // Handle multiple uploaded images
-      const images = req.files.map((file) => file.filename);
+ if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: "No files uploaded" });
+    }
+
+    const imageUrls = [];
+
+    // Loop through each uploaded file
+    for (const file of req.files) {
+      if (!file.buffer || file.buffer.length === 0) {
+        throw new Error(`File buffer is empty for file: ${file.originalname}`);
+      }
+
+      const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
+      const command = new PutObjectCommand({
+        Bucket: S3_BUCKET_NAME,
+        Key: uniqueKey,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+      });
+
+      await s3.send(command);
+
+      // Construct the public URL
+      
+      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
+      imageUrls.push(imageUrl);
+    }
+
 
       const property = new propertyModel({
         title,
-        Images: images, // Save the array of image filenames
+        Images: imageUrls, // Save the array of image filenames
         mainCategory,
         subCategory,
         area,
@@ -344,24 +395,50 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
   try {
     const { title, content } = req.body;
 
-    // Handle uploaded blog images
-    const images = req.files.map((file) => `${file.filename}`);
+    // Ensure req.files is populated
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: "No files uploaded" });
+    }
+
+    const imageUrls = [];
+
+    // Loop through each uploaded file
+    for (const file of req.files) {
+      if (!file.buffer || file.buffer.length === 0) {
+        throw new Error(`File buffer is empty for file: ${file.originalname}`);
+      }
+
+      const uniqueKey = `blogs/${Date.now()}-${file.originalname}`;
+      const command = new PutObjectCommand({
+        Bucket: S3_BUCKET_NAME,
+        Key: uniqueKey,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+      });
+
+      await s3.send(command);
+
+      // Construct the public URL
+      
+      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
+      imageUrls.push(imageUrl);
+    }
 
     // Create a new blog
     const newBlog = new Blog({
       title,
       content,
-      images,
+      images: imageUrls, // Save the array of public URLs
     });
 
     await newBlog.save();
-    res.redirect('/blog')
-
+    res.redirect('/blog');
   } catch (error) {
     console.error("Error creating blog:", error);
     res.status(500).json({ message: "Error creating the blog post", error });
   }
 });
+
 
 
 

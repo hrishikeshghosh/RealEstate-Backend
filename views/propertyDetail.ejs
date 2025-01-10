@@ -22,14 +22,15 @@
     <div class="mt-8 w-full max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden p-6">
       <!-- Main Display Image -->
       <div class="w-full h-64 mb-6">
-        <img id="mainImage" src="/images/uploads/<%= property.Images[0] %>" alt="Property Image" class="w-full h-full object-cover rounded-lg shadow-md">
+        <img id="mainImage" src="<%= property.Images[0] %>" alt="Property Image" class="w-full h-full object-cover rounded-lg shadow-md">
       </div>
 
       <!-- Thumbnail Images -->
+      <% property.Images.forEach((image) => { %>
       <div class="flex items-center justify-center space-x-4 mb-6">
-        <img src="/images/uploads/<%= property.Images[1] %>" alt="Thumbnail 1" class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" onclick="changeMainImage('')">
-        <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=200&fit=crop&q=60" alt="Thumbnail 2" class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" onclick="changeMainImage('https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=800&fit=crop&q=60')">
+        <img src="<%= image %>" alt="Thumbnail 1" class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" onclick="changeMainImage('<%= image %>')">
       </div>
+      <% }); %>
 
       <!-- Add Image Button -->
       <!-- <div class="flex justify-center mb-6">

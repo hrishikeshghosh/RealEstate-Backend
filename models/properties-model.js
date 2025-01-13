@@ -19,7 +19,7 @@ const PropertySchema = new mongoose.Schema({
   subCategory: { 
     type: String,
      enum: { 
-      values: ['Apartment', 'Bungalow', 'Palace', 'Plot','Shop', 'Studio'],
+      values: ['Apartment', 'Bungalow', 'Palace', 'Plot', 'Shop', 'Studio'],
        message: 'Invalid subcategory for the selected category' }, 
 //        validate: { 
 //         validator: function(v) {

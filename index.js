@@ -721,7 +721,7 @@ app.get("/api/blogs/:id", async (req, res) => {
   }
 });
 
-function isLoggedIn(req, res, next) {
+function isLoggedIn (req, res, next) {
   try {
     if (req.cookies.token === "") {
       res.send("please login to see this page");

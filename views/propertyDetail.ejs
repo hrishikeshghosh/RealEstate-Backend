@@ -28,7 +28,7 @@
       <!-- Thumbnail Images -->
       <% property.Images.forEach((image) => { %>
       <div class="flex items-center justify-center space-x-4 mb-6">
-        <img src="<%= image %>" alt="Thumbnail 1" class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" onclick="changeMainImage('<%= image %>')">
+        <img src="<%= property.Images[1] %>" alt="Thumbnail 1" class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" onclick="changeMainImage('<%= image %>')">
       </div>
       <% }); %>
 

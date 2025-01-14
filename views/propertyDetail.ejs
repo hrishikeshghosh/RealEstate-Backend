@@ -30,7 +30,9 @@
      
 
          <div class="flex items-center justify-between space-x-4 mb-6">
-           <img src="<%= image %>" alt="Thumbnail 1" class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" onclick="changeMainImage('<%= image %>')">
+           <img src="<%= image %>" alt="Thumbnail 1" 
+           class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" 
+           onclick="changeMainImage('<%= image %>')">
          </div>
         
         
@@ -143,7 +145,7 @@
           </div>
           <div class="mb-4">
             <label for="images" class="block text-sm font-medium text-gray-700">Upload Image</label>
-            <input id="images" type="file" name="Images" multiple class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
+            <input id="images" type="file" name="Images" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2">
           </div>
           <div class="text-right">
             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:ring focus:ring-blue-300">

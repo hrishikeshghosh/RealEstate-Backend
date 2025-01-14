@@ -31,7 +31,7 @@ const userSchema = new Schema({
 
 propertyType:{
   type: String,
-  enum: ['Residential', 'Commercial', 'OffPlan'],
+  enum: ['Apartment', 'Townhouse', 'Villa', ' Plot', 'Full Floor',],
   // required: true
 
 },

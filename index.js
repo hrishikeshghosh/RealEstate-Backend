@@ -710,9 +710,9 @@ app.get("/api/blogs", async (req, res) => {
 });
 
 //particular blog search
-app.get("/api/blogs/:title", async (req, res) => {
+app.get("/api/blogs/:id", async (req, res) => {
   try {
-    const blog = await Blog.findOne({ title: req.params.title }); // Fetch blog by ID
+    const blog = await Blog.findOne({ _id: req.params.id }); // Fetch blog by ID
     if (!blog) return res.status(404).json({ message: "Blog not found" });
     res.status(200).json(blog);
   } catch (error) {

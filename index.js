@@ -440,11 +440,9 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
   }
 });
 
-app.get('/edit-blog', (req, res) => {
-  res.render('edit-blog');
-});
 
-app.get('/edit-blog/:id', async (req, res) => {
+
+app.get('/editblog/:id', async (req, res) => {
   try {
     const blogId = req.params.id;
     const blog = await Blog.findById(blogId);

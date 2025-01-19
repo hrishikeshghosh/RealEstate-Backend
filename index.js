@@ -281,7 +281,6 @@ app.post(
     } catch (error) {
       console.error("Error uploading property:", error.message);
       res.status(500).send("Error uploading property");
-      
     }
   }
 );

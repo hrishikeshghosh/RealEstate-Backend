@@ -47,10 +47,10 @@ const PropertySchema = new mongoose.Schema({
 },
  // Sub-category
   Images:[{type:String}],
-  bedrooms: { type: String, required: true }, // Number of bedrooms
-  area: { type: String, required: true }, // Number of bedrooms
+  bedrooms: { type: Number, required: true }, // Number of bedrooms
+  area: { type: Number, required: true }, // Number of bedrooms
   location: { type: String, required: true }, // Location (used for "Keyword")
-  price: { type: String, required: true }, // Property price
+  price: { type: Number, required: true }, // Property price
   description : {type : String},
   createdAt: { type: Date, default: Date.now }, // Creation date
 });

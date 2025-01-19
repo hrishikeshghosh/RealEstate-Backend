@@ -448,7 +448,7 @@ app.get('/edit-blog/:id', async (req, res) => {
     const blog = await Blog.findById(blogId);
 
     if (!blog) {
-      return res.send('Blog nhi mil rhe');
+      res.send('Blog nhi mil rhe');
     }
 
     res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data

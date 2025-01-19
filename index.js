@@ -450,8 +450,8 @@ app.get('/editblog/:id', async (req, res) => {
     if (!blog) {
       return res.status(404).send('Blog not found');
     }
-
-    res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
+res.send("blog page edit")
+    // res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
   } catch (error) {
     console.error('Error fetching blog:', error);
     res.status(500).send('Error fetching blog');

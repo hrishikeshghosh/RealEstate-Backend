@@ -120,6 +120,7 @@ app.get("/property/:id", async (req, res) => {
   }
 });
 
+
 app.get("/blog-details/:id", async (req, res) => {
   try {
     const blog = await blogModel.findById(req.params.id);
@@ -437,6 +438,10 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
     console.error("Error creating blog:", error);
     res.status(500).json({ message: "Error creating the blog post", error });
   }
+});
+
+app.get('/edit-blog', (req, res) => {
+  res.render('edit-blog');
 });
 
 app.get('/edit-blog/:id', async (req, res) => {

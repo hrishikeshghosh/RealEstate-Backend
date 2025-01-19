@@ -459,9 +459,7 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
 //   }
 // });
 
-app.get("/admin-api/edit-blog", async (req, res) => {
-res.send("edit blog chal gya")
-})
+
 
 
 
@@ -742,6 +740,9 @@ app.get("/api/blogs/:id", async (req, res) => {
     res.status(500).json({ message: "Error fetching blog", error });
   }
 });
+app.get("/edit-blog", async (req, res) => {
+  res.send("edit blog chal gya")
+  });
 
 function isLoggedIn (req, res, next) {
   try {
@@ -758,6 +759,7 @@ function isLoggedIn (req, res, next) {
     console.error("you dont have login token", error);
   }
 }
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

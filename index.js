@@ -459,7 +459,7 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
 //   }
 // });
 
-app.get("/edit-blog", async (req, res) => {
+app.get("/admin-api/edit-blog", async (req, res) => {
 res.send("edit blog chal gya")
 })
 

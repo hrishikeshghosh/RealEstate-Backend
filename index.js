@@ -331,21 +331,33 @@ app.post(
       if (price) property.price = price;
       if (description) property.description = description;
 
-      // Handle image uploads
-      if (req.files && req.files.length > 0) {
-        const newImages = req.files.map((file) => `${file.filename}`);
+      if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: "No files uploaded" });
+    }
 
-        // Add new images or replace existing ones if there are already 5 images
-        if (property.Images.length < 5) {
-          property.Images.push(
-            ...newImages.slice(0, 5 - property.Images.length)
-          );
-        } else {
-          for (let i = 0; i < newImages.length; i++) {
-            property.Images[i % 5] = newImages[i]; // Replace existing images in a circular manner
-          }
-        }
+      const imageUrls=[];
+
+      for (const file of req.files) {
+      if (!file.buffer || file.buffer.length === 0) {
+        throw new Error(`File buffer is empty for file: ${file.originalname}`);
       }
+
+      const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
+      const command = new PutObjectCommand({
+        Bucket: S3_BUCKET_NAME,
+        Key: uniqueKey,
+        Body: file.buffer,
+        ContentType: file.mimetype,
+      });
+
+      await s3.send(command);
+
+      // Construct the public URL
+      
+      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
+      property.Images.push(imageUrl)
+      imageUrls.push(imageUrl);
+    }
 
       await property.save();
 

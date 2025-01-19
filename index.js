@@ -442,7 +442,7 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
 
 
 
-app.get('/editblog/:id', async (req, res) => {
+app.get('/edit-blog/:id', async (req, res) => {
   try {
     const blogId = req.params.id;
     const blog = await Blog.findById(blogId);
@@ -450,8 +450,9 @@ app.get('/editblog/:id', async (req, res) => {
     if (!blog) {
       return res.status(404).send('Blog not found');
     }
-res.send("blog page edit")
+
     // res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
+    res.send('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
   } catch (error) {
     console.error('Error fetching blog:', error);
     res.status(500).send('Error fetching blog');

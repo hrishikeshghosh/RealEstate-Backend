@@ -280,8 +280,8 @@ app.post(
       res.redirect('/properties')
     } catch (error) {
       console.error("Error uploading property:", error.message);
-      res.status(500).send("Error uploading property");
-      // res.status(500).send(error);
+      // res.status(500).send("Error uploading property");
+      res.status(500).send(error);
     }
   }
 );

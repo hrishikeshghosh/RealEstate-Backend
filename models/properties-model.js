@@ -19,7 +19,7 @@ const PropertySchema = new mongoose.Schema({
   subCategory: { 
     type: String,
      enum: { 
-      values: ['Apartment', 'Bungalow', 'Palace', 'Plot','Shop', 'Studio'],
+      values: ['Apartment', 'Townhouse', 'Offices', 'Villa', 'Plot', 'Shop',],
        message: 'Invalid subcategory for the selected category' }, 
 //        validate: { 
 //         validator: function(v) {
@@ -47,10 +47,10 @@ const PropertySchema = new mongoose.Schema({
 },
  // Sub-category
   Images:[{type:String}],
-  bedrooms: { type: Number, required: true }, // Number of bedrooms
-  area: { type: Number, required: true }, // Number of bedrooms
+  bedrooms: { type: String, required: true }, // Number of bedrooms
+  area: { type: String, required: true }, // Number of bedrooms
   location: { type: String, required: true }, // Location (used for "Keyword")
-  price: { type: Number, required: true }, // Property price
+  price: { type: String, required: true }, // Property price
   description : {type : String},
   createdAt: { type: Date, default: Date.now }, // Creation date
 });

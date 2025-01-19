@@ -120,6 +120,7 @@ app.get("/property/:id", async (req, res) => {
   }
 });
 
+
 app.get("/blog-details/:id", async (req, res) => {
   try {
     const blog = await blogModel.findById(req.params.id);
@@ -453,6 +454,25 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
 
 
 
+// app.get('/edit-blog/:id', async (req, res) => {
+//   try {
+//     const blogId = req.params.id;
+//     const blog = await Blog.findById(blogId);
+
+//     if (!blog) {
+//       res.send('Blog nhi mil rhe');
+//     }
+
+//     res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
+   
+//   } catch (error) {
+//     console.error('Error fetching blog:', error);
+//     res.status(500).send('Error fetching blog');
+//   }
+// });
+
+
+
 
 
 //FRONT-END APIS
@@ -732,8 +752,11 @@ app.get("/api/blogs/:id", async (req, res) => {
     res.status(500).json({ message: "Error fetching blog", error });
   }
 });
+app.get("/edit-blog", async (req, res) => {
+  res.send("edit blog chal gya")
+  });
 
-function isLoggedIn(req, res, next) {
+function isLoggedIn (req, res, next) {
   try {
     if (req.cookies.token === "") {
       res.send("please login to see this page");
@@ -748,6 +771,7 @@ function isLoggedIn(req, res, next) {
     console.error("you dont have login token", error);
   }
 }
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

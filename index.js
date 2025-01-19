@@ -442,22 +442,26 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
 
 
 
-app.get('/edit-blog/:id', async (req, res) => {
-  try {
-    const blogId = req.params.id;
-    const blog = await Blog.findById(blogId);
+// app.get('/edit-blog/:id', async (req, res) => {
+//   try {
+//     const blogId = req.params.id;
+//     const blog = await Blog.findById(blogId);
 
-    if (!blog) {
-      res.send('Blog nhi mil rhe');
-    }
+//     if (!blog) {
+//       res.send('Blog nhi mil rhe');
+//     }
 
-    res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
+//     res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
    
-  } catch (error) {
-    console.error('Error fetching blog:', error);
-    res.status(500).send('Error fetching blog');
-  }
-});
+//   } catch (error) {
+//     console.error('Error fetching blog:', error);
+//     res.status(500).send('Error fetching blog');
+//   }
+// });
+
+app.get("/edit-blog", async (req, res) => {
+res.send("edit blog chal gya")
+})
 
 
 

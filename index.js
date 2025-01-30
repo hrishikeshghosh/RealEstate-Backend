@@ -719,15 +719,6 @@ app.post("/api/properties/off-plan/search", async (req, res) => {
   }
 });
 
-// app.post("/blog/upload-image", upload.single("image"), (req, res) => {
-//   try {
-//     const imageUrl = `/uploads/content-images/${req.file.filename}`;
-//     res.status(200).json({ success: true, file: { url: imageUrl } });
-//   } catch (error) {
-//     console.error("Error uploading blog content image:", error);
-//     res.status(500).json({ success: false, error: "Image upload failed" });
-//   }
-// });
 
 //all blog search
 app.get("/api/blogs", async (req, res) => {
@@ -752,9 +743,7 @@ app.get("/api/blogs/:id", async (req, res) => {
     res.status(500).json({ message: "Error fetching blog", error });
   }
 });
-app.get("/edit-blog", async (req, res) => {
-  res.send("edit blog chal gya")
-  });
+
 
 function isLoggedIn (req, res, next) {
   try {

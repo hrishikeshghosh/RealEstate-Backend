@@ -116,60 +116,36 @@ https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2015/jodit.min.css
 
 
   <div class="container mx-auto max-w-4xl p-6">
+    <!-- Blog Form Card -->
     <div class="bg-white rounded-lg shadow-lg">
       <div class="p-6 border-b border-gray-200">
         <h1 class="text-2xl font-semibold text-gray-800">Edit Blog Post</h1>
+        <p class="text-gray-600 text-sm">Use the editor below to create or edit your blog post with full features.</p>
       </div>
       <div class="p-6">
-        <!-- Form Action में Blog ID डालें और Method PUT करें -->
-        <form action="/admin-api/blog/edit/<%= blog._id %>" method="POST" enctype="multipart/form-data">
-          <!-- Method Override (Express में PUT के लिए) -->
-          <input type="hidden" name="_method" value="PUT">
-  
+        <form action="/admin-api/blog/submit" method="POST" enctype="multipart/form-data">
           <!-- Blog Title -->
           <div class="mb-4">
             <label for="title" class="block text-gray-700 font-medium">Blog Title</label>
-            <!-- Existing Title को Value में डालें -->
-            <input type="text" id="title" name="title" 
-                   value="<%= blog.title %>"
-                   class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-500 focus:outline-none" required />
+            <input type="text" id="title" name="title" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-teal-500 focus:outline-none" placeholder="Enter the blog title" required />
           </div>
-  
-          <!-- Existing Images Display -->
-          <% if(blog.images && blog.images.length > 0) { %>
-            <div class="mb-4">
-              <label class="block text-gray-700 font-medium">Current Images</label>
-              <div class="flex flex-wrap gap-2 mt-2">
-                <% blog.images.forEach(image => { %>
-                  <img src="<%= image %>" class="w-24 h-24 object-cover rounded border">
-                <% }) %>
-              </div>
-            </div>
-          <% } %>
-  
-          <!-- New Images Upload -->
+
+          <!-- Blog Image Upload -->
           <div class="mb-4">
-            <label for="images" class="block text-gray-700 font-medium">Upload New Images (Max 5)</label>
-            <input type="file" id="images" name="images" 
-                   multiple accept="image/*" 
-                   class="block w-full text-gray-700 border border-gray-300 rounded-lg p-2 focus:outline-none" />
+            <label for="image" class="block text-gray-700 font-medium">Upload Blog Image</label>
+            <input type="file" id="image" name="images" accept="image/*" class="block w-full text-gray-700 border border-gray-300 rounded-lg p-2 focus:outline-none" />
           </div>
-  
+
           <!-- Blog Content -->
           <div class="mb-4">
             <label for="content" class="block text-gray-700 font-medium">Blog Content</label>
-            <!-- Existing Content को Editor में डालें -->
-            <textarea id="content" name="content" rows="10" 
-                      class="w-full border border-gray-300 rounded-lg"><%= blog.content %></textarea>
+            <textarea id="content" name="content" rows="10" class="w-full border border-gray-300 rounded-lg focus:ring focus:ring-teal-500 focus:outline-none" required></textarea>
           </div>
-  
+
           <!-- Submit Button -->
-          <div class="flex justify-end gap-3">
-            <a href="/blog" class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
-              Cancel
-            </a>
-            <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600">
-              Update Post
+          <div class="flex justify-end">
+            <button type="submit" class="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition">
+              Save Blog Post
             </button>
           </div>
         </form>
@@ -217,7 +193,6 @@ https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2015/jodit.min.css
         'preview',
       ],
       placeholder: "Start writing your blog content here...",
-      editor: '<%= blog.content %>' // Existing Content Load
     });
   </script>
 </body>

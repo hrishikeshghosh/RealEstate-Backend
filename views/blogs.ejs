@@ -15,7 +15,14 @@
 
     </a>
     <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Latest Blogs</h1>
-
+    <% blogs.forEach(blog => { %>
+      <div class="blog-item">
+        <h3><%= blog.title %></h3>
+        <p><%= blog.content %></p>
+        <!-- Edit Button with Dynamic ID -->
+        <a href="/admin/blog/edit/<%= blog._id %>" class="edit-button">Edit Blog</a>
+      </div>
+    <% }) %>
     <!-- Dynamic Blog Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <% blogs.forEach((blog) => { %>

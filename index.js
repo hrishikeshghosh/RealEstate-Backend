@@ -14,6 +14,7 @@ const { createProxyMiddleware } = require("http-proxy-middleware");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const blogModel = require("./models/blog-model");
 require("dotenv").config();
+const methodOverride = require('method-override');  
 
 const S3_BUCKET_NAME=process.env.S3_BUCKET_NAME
 const S3_BUCKET_REGION=process.env.S3_BUCKET_REGION
@@ -28,6 +29,7 @@ const s3=new S3Client({
   region: S3_BUCKET_REGION
 })
 
+app.use(methodOverride('_method')); // PUT/PATCH requests handle karne ke liye  
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(express.json());
@@ -452,27 +454,66 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
   }
 });
 
+app.put("/admin-api/blog/edit/:id", upload.array("images", 5), async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
 
+    // पुराना ब्लॉग ढूंढें
+    const existingBlog = await Blog.findById(id);
+    if (!existingBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
 
-// app.get('/edit-blog/:id', async (req, res) => {
-//   try {
-//     const blogId = req.params.id;
-//     const blog = await Blog.findById(blogId);
+    // नई इमेजेस अपलोड होने पर
+    if (req.files && req.files.length > 0) {
+      
+      // पुरानी S3 इमेजेस डिलीट करें
+      for (const oldImageUrl of existingBlog.images) {
+        const oldKey = oldImageUrl.split(".amazonaws.com/")[1]; // S3 key निकालें
+        const deleteCommand = new DeleteObjectCommand({
+          Bucket: S3_BUCKET_NAME,
+          Key: oldKey,
+        });
+        await s3.send(deleteCommand);
+      }
 
-//     if (!blog) {
-//       res.send('Blog nhi mil rhe');
-//     }
+      // नई इमेजेस अपलोड करें
+      const newImageUrls = [];
+      for (const file of req.files) {
+        const uniqueKey = `blogs/${Date.now()}-${file.originalname}`;
+        const uploadCommand = new PutObjectCommand({
+          Bucket: S3_BUCKET_NAME,
+          Key: uniqueKey,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        });
+        await s3.send(uploadCommand);
+        newImageUrls.push(`https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`);
+      }
+      existingBlog.images = newImageUrls;
+    }
 
-//     res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
-   
-//   } catch (error) {
-//     console.error('Error fetching blog:', error);
-//     res.status(500).send('Error fetching blog');
-//   }
-// });
+    // टाइटल और कंटेंट अपडेट करें
+    existingBlog.title = title || existingBlog.title;
+    existingBlog.content = content || existingBlog.content;
 
+    await existingBlog.save();
+    res.redirect('/blog');
+  } catch (error) {
+    console.error("Error updating blog:", error);
+    res.status(500).json({ message: "Error updating blog", error });
+  }
+});
 
-
+app.get("/admin/blog/edit/:id", async (req, res) => {
+  try {
+    const blog = await Blog.findById(req.params.id); // ID se blog fetch karo
+    res.render("edit-blog", { blog }); // EJS template ko data pass karo
+  } catch (error) {
+    res.status(500).send("Error loading blog");
+  }
+});
 
 
 //FRONT-END APIS

@@ -21,24 +21,27 @@
     <!-- Property Details Card -->
     <div class="mt-8 w-full max-w-5xl bg-white shadow-lg rounded-lg overflow-hidden p-6">
       <!-- Main Display Image -->
-      <div class="w-full h-64 mb-6">
+      <div class="w-full h-[60vh] h-64 mb-6">
         <img id="mainImage" src="<%= property.Images[0] %>" alt="Property Image" class="w-full h-full object-cover rounded-lg shadow-md">
       </div>
 
       <!-- Thumbnail Images -->
-      <% property.Images.forEach((image) => { %>
-     
-
-         <div class="flex items-center justify-between space-x-4 mb-6">
-           <img src="<%= image %>" alt="Thumbnail 1" 
-           class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" 
-           onclick="changeMainImage('<%= image %>')">
-         </div>
+       <div class="flex w-full">
+         <% property.Images.forEach((image) => { %>
         
-        
+   
+            <div class="flex items-center justify-between space-x-4 mb-6">
+              <img src="<%= image %>" alt="Thumbnail 1" 
+              class="h-24 w-24 object-cover rounded-md cursor-pointer border border-gray-300" 
+              onclick="changeMainImage('<%= image %>')">
+            </div>
+           
+           
+   
+         
+         <% }); %>
 
-      
-      <% }); %>
+       </div>
 
      
 
@@ -55,7 +58,12 @@
       <!-- Editable Description -->
       <form id="descriptionForm" action="/admin-api/upload-property-desc/<%= property._id %>" method='post' class="mb-6">
         <label for="propertyDescription" class="block text-lg font-medium text-gray-700">Description</label>
+       
         <textarea id="propertyDescription" name="description" rows="4" class="mt-2 block w-full p-3 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add property description here..."><%= property.description %></textarea>
+      
+      
+      
+      
         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 mt-4 rounded-lg">
           Save Description
         </button>
@@ -124,6 +132,47 @@
   </div>
 
   <!-- JavaScript -->
+  <script>
+    const editor = new Jodit('#propertyDescription', {
+      height: 400,
+      toolbarSticky: true,
+      toolbarAdaptive: false,
+      uploader: {
+        insertImageAsBase64URI: true, // Allows uploading images directly
+      },
+      buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        '|',
+        'ul',
+        'ol',
+        '|',
+        'outdent',
+        'indent',
+        '|',
+        'font',
+        'fontsize',
+        'paragraph',
+        '|',
+        'link',
+        // 'image',
+        // 'video',
+        'table',
+        '|',
+        'align',
+        'undo',
+        'redo',
+        '|',
+        'source',
+        'fullsize',
+        '|',
+        'preview',
+      ],
+      placeholder: "Start writing your Property Description here...",
+    });
+  </script>
   <script>
     // Function to handle delete confirmation
     function confirmDelete(id) {

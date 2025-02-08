@@ -141,25 +141,35 @@
 
   <!-- JavaScript -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const editor = new Jodit("#propertyDescription", {
-        height: 400,
-        toolbarSticky: true,
-        toolbarAdaptive: false,
-        uploader: {
-          insertImageAsBase64URI: true, // Allows uploading images directly
-        },
-        buttons: [
-          "bold", "italic", "underline", "strikethrough", "|",
-          "ul", "ol", "|", "outdent", "indent", "|",
-          "font", "fontsize", "paragraph", "|",
-          "link", "image", "video", "table", "|",
-          "align", "undo", "redo", "|",
-          "source", "fullsize", "|", "preview"
-        ],
-        placeholder: "Start writing your Property Description here...",
-      });
-    });
+   document.addEventListener("DOMContentLoaded", function () {
+  const editor = new Jodit("#propertyDescription", {
+    height: 400,
+    toolbarSticky: true,
+    toolbarAdaptive: false,
+    uploader: {
+      insertImageAsBase64URI: true,
+    },
+    buttons: [
+      "bold", "italic", "underline", "strikethrough", "|",
+      "ul", "ol", "|", "outdent", "indent", "|",
+      "font", "fontsize", "paragraph", "|",
+      "link", "image", "video", "table", "|",
+      "align", "undo", "redo", "|",
+      "source", "fullsize", "|", "preview"
+    ],
+    placeholder: "Start writing your Property Description here...",
+
+    
+    cleanHTML: {
+      fillEmptyParagraph: false, 
+      removeEmptyBlocks: true, 
+      removeInlineStyles: true 
+    },
+
+    allowClassNames: false, 
+  });
+});
+
   </script>
   
   <script>

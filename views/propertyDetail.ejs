@@ -139,45 +139,45 @@ https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2015/jodit.min.css
 
   <!-- JavaScript -->
   <script>
-    // const editor = new Jodit('#propertyDescription', {
-    //   height: 400,
-    //   toolbarSticky: true,
-    //   toolbarAdaptive: false,
-    //   uploader: {
-    //     insertImageAsBase64URI: true, // Allows uploading images directly
-    //   },
-    //   buttons: [
-    //     'bold',
-    //     'italic',
-    //     'underline',
-    //     'strikethrough',
-    //     '|',
-    //     'ul',
-    //     'ol',
-    //     '|',
-    //     'outdent',
-    //     'indent',
-    //     '|',
-    //     'font',
-    //     'fontsize',
-    //     'paragraph',
-    //     '|',
-    //     'link',
-    //     // 'image',
-    //     // 'video',
-    //     'table',
-    //     '|',
-    //     'align',
-    //     'undo',
-    //     'redo',
-    //     '|',
-    //     'source',
-    //     'fullsize',
-    //     '|',
-    //     'preview',
-    //   ],
-    //   placeholder: "Start writing your Property Description here...",
-    // });
+    const editor = new Jodit('#propertyDescription', {
+      height: 400,
+      toolbarSticky: true,
+      toolbarAdaptive: false,
+      uploader: {
+        insertImageAsBase64URI: true, // Allows uploading images directly
+      },
+      buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        '|',
+        'ul',
+        'ol',
+        '|',
+        'outdent',
+        'indent',
+        '|',
+        'font',
+        'fontsize',
+        'paragraph',
+        '|',
+        'link',
+        // 'image',
+        // 'video',
+        'table',
+        '|',
+        'align',
+        'undo',
+        'redo',
+        '|',
+        'source',
+        'fullsize',
+        '|',
+        'preview',
+      ],
+      placeholder: "Start writing your Property Description here...",
+    });
  
     // Function to handle delete confirmation
     function confirmDelete(id) {

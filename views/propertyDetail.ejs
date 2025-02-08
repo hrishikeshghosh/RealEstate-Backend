@@ -8,12 +8,11 @@
   <title>Property Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="
-  https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2018/jodit.fat.min.js
-  "></script>
-    <link href="
-  https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2015/jodit.min.css
-  " rel="stylesheet">
-  
+https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2018/jodit.fat.min.js
+"></script>
+  <link href="
+https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2015/jodit.min.css
+" rel="stylesheet">
 </head>
 
 <body class="bg-gray-100">
@@ -66,9 +65,8 @@
       <form id="descriptionForm" action="/admin-api/upload-property-desc/<%= property._id %>" method='post' class="mb-6">
         <label for="propertyDescription" class="block text-lg font-medium text-gray-700">Description</label>
        
-        <!-- <textarea id="propertyDescription" name="description" rows="4" class="mt-2 block w-full p-3 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add property description here..."><%= property.description %></textarea> -->
+        <textarea id="propertyDescription" name="description" rows="4" class="mt-2 block w-full p-3 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add property description here..."><%= property.description %></textarea>
       
-        <textarea id="propertyDescription" name="description" rows="10" class="w-full border border-gray-300 rounded-lg focus:ring focus:ring-teal-500 focus:outline-none" required placeholder="Add property description here..."></textarea>
       
       
       
@@ -141,38 +139,46 @@
 
   <!-- JavaScript -->
   <script>
-   document.addEventListener("DOMContentLoaded", function () {
-  const editor = new Jodit("#propertyDescription", {
-    height: 400,
-    toolbarSticky: true,
-    toolbarAdaptive: false,
-    uploader: {
-      insertImageAsBase64URI: true,
-    },
-    buttons: [
-      "bold", "italic", "underline", "strikethrough", "|",
-      "ul", "ol", "|", "outdent", "indent", "|",
-      "font", "fontsize", "paragraph", "|",
-      "link", "image", "video", "table", "|",
-      "align", "undo", "redo", "|",
-      "source", "fullsize", "|", "preview"
-    ],
-    placeholder: "Start writing your Property Description here...",
-
-    
-    cleanHTML: {
-      fillEmptyParagraph: false, 
-      removeEmptyBlocks: true, 
-      removeInlineStyles: true 
-    },
-
-    allowClassNames: false, 
-  });
-});
-
-  </script>
-  
-  <script>
+    const editor = new Jodit('#propertyDescription', {
+      height: 400,
+      toolbarSticky: true,
+      toolbarAdaptive: false,
+      uploader: {
+        insertImageAsBase64URI: true, // Allows uploading images directly
+      },
+      buttons: [
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        '|',
+        'ul',
+        'ol',
+        '|',
+        'outdent',
+        'indent',
+        '|',
+        'font',
+        'fontsize',
+        'paragraph',
+        '|',
+        'link',
+        // 'image',
+        // 'video',
+        'table',
+        '|',
+        'align',
+        'undo',
+        'redo',
+        '|',
+        'source',
+        'fullsize',
+        '|',
+        'preview',
+      ],
+      placeholder: "Start writing your Property Description here...",
+    });
+ 
     // Function to handle delete confirmation
     function confirmDelete(id) {
       const confirmed = confirm("Are you sure you want to delete this property?");

@@ -7,10 +7,12 @@
   <link rel="icon" type="image/png" href="/images/download.png" />
   <title>Property Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/jodit@latest/build/jodit.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jodit@latest/build/jodit.min.css">
-  </head>
+  <script src="
+  https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2018/jodit.fat.min.js
+  "></script>
+    <link href="
+  https://cdn.jsdelivr.net/npm/jodit@4.2.47/es2015/jodit.min.css
+  " rel="stylesheet">
   
 </head>
 
@@ -139,46 +141,27 @@
 
   <!-- JavaScript -->
   <script>
-    const editor = new Jodit('#propertyDescription', {
-      height: 400,
-      toolbarSticky: true,
-      toolbarAdaptive: false,
-      uploader: {
-        insertImageAsBase64URI: true, // Allows uploading images directly
-      },
-      buttons: [
-        'bold',
-        'italic',
-        'underline',
-        'strikethrough',
-        '|',
-        'ul',
-        'ol',
-        '|',
-        'outdent',
-        'indent',
-        '|',
-        'font',
-        'fontsize',
-        'paragraph',
-        '|',
-        'link',
-        // 'image',
-        // 'video',
-        'table',
-        '|',
-        'align',
-        'undo',
-        'redo',
-        '|',
-        'source',
-        'fullsize',
-        '|',
-        'preview',
-      ],
-      placeholder: "Start writing your Property Description here...",
+    document.addEventListener("DOMContentLoaded", function () {
+      const editor = new Jodit("#propertyDescription", {
+        height: 400,
+        toolbarSticky: true,
+        toolbarAdaptive: false,
+        uploader: {
+          insertImageAsBase64URI: true, // Allows uploading images directly
+        },
+        buttons: [
+          "bold", "italic", "underline", "strikethrough", "|",
+          "ul", "ol", "|", "outdent", "indent", "|",
+          "font", "fontsize", "paragraph", "|",
+          "link", "image", "video", "table", "|",
+          "align", "undo", "redo", "|",
+          "source", "fullsize", "|", "preview"
+        ],
+        placeholder: "Start writing your Property Description here...",
+      });
     });
   </script>
+  
   <script>
     // Function to handle delete confirmation
     function confirmDelete(id) {

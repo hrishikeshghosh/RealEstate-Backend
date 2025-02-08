@@ -59,8 +59,9 @@
       <form id="descriptionForm" action="/admin-api/upload-property-desc/<%= property._id %>" method='post' class="mb-6">
         <label for="propertyDescription" class="block text-lg font-medium text-gray-700">Description</label>
        
-        <textarea id="propertyDescription" name="description" rows="4" class="mt-2 block w-full p-3 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add property description here..."><%= property.description %></textarea>
+        <!-- <textarea id="propertyDescription" name="description" rows="4" class="mt-2 block w-full p-3 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Add property description here..."><%= property.description %></textarea> -->
       
+        <textarea id="propertyDescription" name="description" rows="10" class="w-full border border-gray-300 rounded-lg focus:ring focus:ring-teal-500 focus:outline-none" required placeholder="Add property description here..."><%= property.description %></textarea>
       
       
       

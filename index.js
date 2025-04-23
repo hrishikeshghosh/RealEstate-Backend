@@ -15,18 +15,18 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const blogModel = require("./models/blog-model");
 require("dotenv").config();
 
-const S3_BUCKET_NAME=process.env.S3_BUCKET_NAME
-const S3_BUCKET_REGION=process.env.S3_BUCKET_REGION
-const S3_BUCKET_ACCESS_KEY=process.env.S3_BUCKET_ACCESS_KEY
-const S3_BUCKET_SECRET_ACCESS_KEY=process.env.S3_BUCKET_SECRET_ACCESS_KEY
+const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
+const S3_BUCKET_REGION = process.env.S3_BUCKET_REGION;
+const S3_BUCKET_ACCESS_KEY = process.env.S3_BUCKET_ACCESS_KEY;
+const S3_BUCKET_SECRET_ACCESS_KEY = process.env.S3_BUCKET_SECRET_ACCESS_KEY;
 
-const s3=new S3Client({
-  credentials:{
+const s3 = new S3Client({
+  credentials: {
     accessKeyId: S3_BUCKET_ACCESS_KEY,
-    secretAccessKey:S3_BUCKET_SECRET_ACCESS_KEY
+    secretAccessKey: S3_BUCKET_SECRET_ACCESS_KEY,
   },
-  region: S3_BUCKET_REGION
-})
+  region: S3_BUCKET_REGION,
+});
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
@@ -119,7 +119,6 @@ app.get("/property/:id", async (req, res) => {
     res.status(500).send(err);
   }
 });
-
 
 app.get("/blog-details/:id", async (req, res) => {
   try {
@@ -215,14 +214,14 @@ app.post("/admin-api/login", async (req, res) => {
 
 app.get("/admin-api/logout", (req, res) => {
   res.cookie("token", "");
-  res.redirect('/login')
+  res.redirect("/login");
 });
 
 //upload property
 app.post(
   "/admin-api/upload-property",
   upload.array("Images", 10),
-  async (req, res) => {
+  async (req, res) => {4
     try {
       const {
         title,
@@ -234,34 +233,35 @@ app.post(
         price,
       } = req.body;
 
- if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: "No files uploaded" });
-    }
-
-    const imageUrls = [];
-
-    // Loop through each uploaded file
-    for (const file of req.files) {
-      if (!file.buffer || file.buffer.length === 0) {
-        throw new Error(`File buffer is empty for file: ${file.originalname}`);
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ message: "No files uploaded" });
       }
 
-      const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
-      const command = new PutObjectCommand({
-        Bucket: S3_BUCKET_NAME,
-        Key: uniqueKey,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-      });
+      const imageUrls = [];
 
-      await s3.send(command);
+      // Loop through each uploaded file
+      for (const file of req.files) {
+        if (!file.buffer || file.buffer.length === 0) {
+          throw new Error(
+            `File buffer is empty for file: ${file.originalname}`
+          );
+        }
 
-      // Construct the public URL
-      
-      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
-      imageUrls.push(imageUrl);
-    }
+        const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
+        const command = new PutObjectCommand({
+          Bucket: S3_BUCKET_NAME,
+          Key: uniqueKey,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        });
 
+        await s3.send(command);
+
+        // Construct the public URL
+
+        const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
+        imageUrls.push(imageUrl);
+      }
 
       const property = new propertyModel({
         title,
@@ -277,7 +277,7 @@ app.post(
       await property.save();
       console.log("Property saved successfully!", property);
       // res.status(201).json({message:"Property uploaded successfully!", redirect:"/properties"});
-      res.redirect('/properties')
+      res.redirect("/properties");
     } catch (error) {
       console.error("Error uploading property:", error.message);
       res.status(500).send("Error uploading property");
@@ -295,12 +295,10 @@ app.post("/admin-api/properties/delete/:id", async (req, res) => {
     if (!property) {
       return res.status(404).render("error", { message: "Property not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Property deleted successfully!",
-        redirect: "/properties",
-      });
+    res.status(200).json({
+      message: "Property deleted successfully!",
+      redirect: "/properties",
+    });
   } catch (error) {
     console.error("Error deleting property:", error);
     res.status(500).render("error", { message: "Error deleting property" });
@@ -333,32 +331,34 @@ app.post(
       if (description) property.description = description;
 
       if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: "No files uploaded" });
-    }
-
-      const imageUrls=[];
-
-      for (const file of req.files) {
-      if (!file.buffer || file.buffer.length === 0) {
-        throw new Error(`File buffer is empty for file: ${file.originalname}`);
+        return res.status(400).json({ message: "No files uploaded" });
       }
 
-      const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
-      const command = new PutObjectCommand({
-        Bucket: S3_BUCKET_NAME,
-        Key: uniqueKey,
-        Body: file.buffer,
-        ContentType: file.mimetype,
-      });
+      const imageUrls = [];
 
-      await s3.send(command);
+      for (const file of req.files) {
+        if (!file.buffer || file.buffer.length === 0) {
+          throw new Error(
+            `File buffer is empty for file: ${file.originalname}`
+          );
+        }
 
-      // Construct the public URL
-      
-      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
-      property.Images.push(imageUrl)
-      imageUrls.push(imageUrl);
-    }
+        const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
+        const command = new PutObjectCommand({
+          Bucket: S3_BUCKET_NAME,
+          Key: uniqueKey,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        });
+
+        await s3.send(command);
+
+        // Construct the public URL
+
+        const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
+        property.Images.push(imageUrl);
+        imageUrls.push(imageUrl);
+      }
 
       await property.save();
 
@@ -404,55 +404,59 @@ app.post("/admin-api/upload-property-desc/:id", async (req, res) => {
 });
 
 // POST route to create a new blog
-app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) => {
-  try {
-    const { title, content } = req.body;
+app.post(
+  "/admin-api/blog/submit",
+  upload.array("images", 5),
+  async (req, res) => {
+    try {
+      const { title, content } = req.body;
 
-    // Ensure req.files is populated
-    if (!req.files || req.files.length === 0) {
-      return res.status(400).json({ message: "No files uploaded" });
-    }
-
-    const imageUrls = [];
-
-    // Loop through each uploaded file
-    for (const file of req.files) {
-      if (!file.buffer || file.buffer.length === 0) {
-        throw new Error(`File buffer is empty for file: ${file.originalname}`);
+      // Ensure req.files is populated
+      if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ message: "No files uploaded" });
       }
 
-      const uniqueKey = `blogs/${Date.now()}-${file.originalname}`;
-      const command = new PutObjectCommand({
-        Bucket: S3_BUCKET_NAME,
-        Key: uniqueKey,
-        Body: file.buffer,
-        ContentType: file.mimetype,
+      const imageUrls = [];
+
+      // Loop through each uploaded file
+      for (const file of req.files) {
+        if (!file.buffer || file.buffer.length === 0) {
+          throw new Error(
+            `File buffer is empty for file: ${file.originalname}`
+          );
+        }
+
+        const uniqueKey = `blogs/${Date.now()}-${file.originalname}`;
+        const command = new PutObjectCommand({
+          Bucket: S3_BUCKET_NAME,
+          Key: uniqueKey,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        });
+
+        await s3.send(command);
+
+        // Construct the public URL
+
+        const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
+        imageUrls.push(imageUrl);
+      }
+
+      // Create a new blog
+      const newBlog = new Blog({
+        title,
+        content,
+        images: imageUrls, // Save the array of public URLs
       });
 
-      await s3.send(command);
-
-      // Construct the public URL
-      
-      const imageUrl = `https://${S3_BUCKET_NAME}.s3.${S3_BUCKET_REGION}.amazonaws.com/${uniqueKey}`;
-      imageUrls.push(imageUrl);
+      await newBlog.save();
+      res.redirect("/blog");
+    } catch (error) {
+      console.error("Error creating blog:", error);
+      res.status(500).json({ message: "Error creating the blog post", error });
     }
-
-    // Create a new blog
-    const newBlog = new Blog({
-      title,
-      content,
-      images: imageUrls, // Save the array of public URLs
-    });
-
-    await newBlog.save();
-    res.redirect('/blog');
-  } catch (error) {
-    console.error("Error creating blog:", error);
-    res.status(500).json({ message: "Error creating the blog post", error });
   }
-});
-
-
+);
 
 // app.get('/edit-blog/:id', async (req, res) => {
 //   try {
@@ -464,16 +468,12 @@ app.post("/admin-api/blog/submit", upload.array("images", 5), async (req, res) =
 //     }
 
 //     res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
-   
+
 //   } catch (error) {
 //     console.error('Error fetching blog:', error);
 //     res.status(500).send('Error fetching blog');
 //   }
 // });
-
-
-
-
 
 //FRONT-END APIS
 app.get("/api/properties", async (req, res) => {
@@ -485,6 +485,21 @@ app.get("/api/properties", async (req, res) => {
     res.status(500).json({ message: "Error fetching properties" });
   }
 });
+
+app.get("/api/properties/rent", async (req, res) => {
+  try {
+    const properties = await propertyModel.find({
+      mainCategory: "Rental",
+    });
+    console.log(properties, " Properties fetching successfully");
+    res.status(200).json(properties);
+    // console.log(properties);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching properties" , error});
+  }
+  // res.send("hello from rental properties");
+});
+
 
 app.get("/api/properties/residential", async (req, res) => {
   try {
@@ -719,7 +734,6 @@ app.post("/api/properties/off-plan/search", async (req, res) => {
   }
 });
 
-
 //all blog search
 app.get("/api/blogs", async (req, res) => {
   try {
@@ -744,8 +758,7 @@ app.get("/api/blogs/:id", async (req, res) => {
   }
 });
 
-
-function isLoggedIn (req, res, next) {
+function isLoggedIn(req, res, next) {
   try {
     if (req.cookies.token === "") {
       res.send("please login to see this page");
@@ -760,7 +773,6 @@ function isLoggedIn (req, res, next) {
     console.error("you dont have login token", error);
   }
 }
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require('dotenv').config();
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI || "mongodb+srv://JayPawar:0rNK2z39c7eX864S@dbaas-db-6898794-0a550b7f.mongo.ondigitalocean.com/admin?tls=true&authSource=admin&replicaSet=dbaas-db-6898794")
   .then(async () => {
     console.log("Database connected!");
     console.log("MongoDB URI:", process.env.MONGO_URI);
@@ -13,7 +13,7 @@ const PropertySchema = new mongoose.Schema({
                                                        
   mainCategory: { 
     type: String, 
-    enum: ["Residential", "Commercial", "OffPlan"], 
+    enum: ["Rental", "Residential", "Commercial", "OffPlan"], 
     required: true 
   }, // Main category
   subCategory: { 

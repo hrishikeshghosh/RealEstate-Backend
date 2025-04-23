@@ -1,4 +1,6 @@
 const express = require("express");
+
+
 const app = express();
 const path = require("path");
 const propertyModel = require("./models/properties-model");
@@ -280,7 +282,7 @@ app.post(
       res.redirect("/properties");
     } catch (error) {
       console.error("Error uploading property:", error.message);
-      res.status(500).send("Error uploading property");
+      res.status(500).send("Error uploading property" + error.message);
     }
   }
 );
@@ -486,20 +488,33 @@ app.get("/api/properties", async (req, res) => {
   }
 });
 
+// app.get("/api/properties/rent", async (req, res) => {
+//   try {
+//     const properties = await propertyModel.find({
+//       mainCategory: "Rental",
+//     });
+//     console.log(properties, " Properties fetching successfully");
+//     res.status(200).json(properties);
+//     // console.log(properties);
+//   } catch (error) {
+//     res.status(500).json({ message: "Error fetching properties" , error});
+//   }
+//   // res.send("hello from rental properties");
+// });
+
 app.get("/api/properties/rent", async (req, res) => {
+  console.log("👉 RENT API HIT");
   try {
     const properties = await propertyModel.find({
       mainCategory: "Rental",
     });
-    console.log(properties, " Properties fetching successfully");
+    console.log("✅ Fetched:", properties.length);
     res.status(200).json(properties);
-    // console.log(properties);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching properties" , error});
+    console.error("❌ ERROR:", error);
+    res.status(500).json({ message: "Error fetching properties", error });
   }
-  // res.send("hello from rental properties");
 });
-
 
 app.get("/api/properties/residential", async (req, res) => {
   try {

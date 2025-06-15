@@ -234,11 +234,12 @@ app.post(
         location,
         price,
       } = req.body;
+      console.log(req.body)
 
       if (!req.files || req.files.length === 0) {
         return res.status(400).json({ message: "No files uploaded" });
       }
-
+console.log(req.files)
       const imageUrls = [];
 
       // Loop through each uploaded file
@@ -250,13 +251,14 @@ app.post(
         }
 
         const uniqueKey = `properties/${Date.now()}-${file.originalname}`;
+        console.log(uniqueKey)
         const command = new PutObjectCommand({
           Bucket: S3_BUCKET_NAME,
           Key: uniqueKey,
           Body: file.buffer,
           ContentType: file.mimetype,
         });
-
+        console.log(command)
         await s3.send(command);
 
         // Construct the public URL
@@ -275,7 +277,6 @@ app.post(
         location,
         price,
       });
-
       await property.save();
       console.log("Property saved successfully!", property);
       // res.status(201).json({message:"Property uploaded successfully!", redirect:"/properties"});
@@ -653,6 +654,38 @@ app.post("/api/properties/residential/search", async (req, res) => {
   // Filter by bedrooms
   if (bedrooms) {
     // console.log(bedrooms);
+    filter.bedrooms = bedrooms;
+  }
+
+  try {
+    const properties = await propertyModel.find(filter);
+    res.json(properties);
+  } catch (error) {
+    console.error("Error fetching properties:", error);
+    res.status(500).json({ error: "Failed to fetch properties" });
+  }
+});
+app.post("/api/properties/rent/search", async (req, res) => {
+  const { query, type, bedrooms } = req.body; // Use req.body for POST requests
+  const filter = {
+    mainCategory: "Rental" // Add mainCategory filter for rental properties
+  };
+
+  // General search (location or title)
+  if (query) {
+    filter.$or = [
+      { title: { $regex: query, $options: "i" } },
+      { location: { $regex: query, $options: "i" } },
+    ];
+  }
+
+  // Filter by subCategory (property type)
+  if (type) {
+    filter.subCategory = type;
+  }
+
+  // Filter by bedrooms
+  if (bedrooms) {
     filter.bedrooms = bedrooms;
   }
 

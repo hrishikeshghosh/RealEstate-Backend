@@ -5,6 +5,7 @@ mongoose
   .then(async () => {
     console.log("Database connected!");
     console.log("MongoDB URI:", process.env.MONGO_URI);
+
   })
   .catch((err) => console.error("Database connection error:", err));
 

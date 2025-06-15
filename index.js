@@ -223,7 +223,7 @@ app.get("/admin-api/logout", (req, res) => {
 app.post(
   "/admin-api/upload-property",
   upload.array("Images", 10),
-  async (req, res) => {4
+  async (req, res) => {
     try {
       const {
         title,
@@ -502,6 +502,20 @@ app.get("/api/properties", async (req, res) => {
 //   // res.send("hello from rental properties");
 // });
 
+// app.get("/api/properties/rent", async (req, res) => {
+//   console.log("👉 RENT API HIT");
+//   try {
+//     const properties = await propertyModel.find({
+//       mainCategory: "Rental",
+//     });
+//     console.log("✅ Fetched:", properties.length);
+//     res.status(200).json(properties);
+//   } catch (error) {
+//     console.error("❌ ERROR:", error);
+//     res.status(500).json({ message: "Error fetching properties", error });
+//   }
+// });
+
 app.get("/api/properties/rent", async (req, res) => {
   console.log("👉 RENT API HIT");
   try {
@@ -515,6 +529,7 @@ app.get("/api/properties/rent", async (req, res) => {
     res.status(500).json({ message: "Error fetching properties", error });
   }
 });
+
 
 app.get("/api/properties/residential", async (req, res) => {
   try {

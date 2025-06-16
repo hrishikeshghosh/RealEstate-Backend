@@ -461,22 +461,6 @@ app.post(
   }
 );
 
-// app.get('/edit-blog/:id', async (req, res) => {
-//   try {
-//     const blogId = req.params.id;
-//     const blog = await Blog.findById(blogId);
-
-//     if (!blog) {
-//       res.send('Blog nhi mil rhe');
-//     }
-
-//     res.render('edit-blog', { blog }); // Render blog-edit.ejs with the existing blog data
-
-//   } catch (error) {
-//     console.error('Error fetching blog:', error);
-//     res.status(500).send('Error fetching blog');
-//   }
-// });
 
 //FRONT-END APIS
 app.get("/api/properties", async (req, res) => {
@@ -489,33 +473,6 @@ app.get("/api/properties", async (req, res) => {
   }
 });
 
-// app.get("/api/properties/rent", async (req, res) => {
-//   try {
-//     const properties = await propertyModel.find({
-//       mainCategory: "Rental",
-//     });
-//     console.log(properties, " Properties fetching successfully");
-//     res.status(200).json(properties);
-//     // console.log(properties);
-//   } catch (error) {
-//     res.status(500).json({ message: "Error fetching properties" , error});
-//   }
-//   // res.send("hello from rental properties");
-// });
-
-// app.get("/api/properties/rent", async (req, res) => {
-//   console.log("👉 RENT API HIT");
-//   try {
-//     const properties = await propertyModel.find({
-//       mainCategory: "Rental",
-//     });
-//     console.log("✅ Fetched:", properties.length);
-//     res.status(200).json(properties);
-//   } catch (error) {
-//     console.error("❌ ERROR:", error);
-//     res.status(500).json({ message: "Error fetching properties", error });
-//   }
-// });
 
 app.get("/api/properties/rent", async (req, res) => {
   console.log("👉 RENT API HIT");

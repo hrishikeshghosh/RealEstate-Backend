@@ -1,0 +1,76 @@
+* [33m214bb05[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Local changes: updated files
+*   [33m83b176f[m Merged remote changes into local
+[32m|[m[33m\[m  
+[32m|[m * [33m4899c78[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m fixed user model
+[32m|[m *   [33mf464fd5[m Merge branch 'main' of https://github.com/hrishikeshghosh/RealEstate-Backend
+[32m|[m [34m|[m[35m\[m  
+[32m|[m * [35m|[m [33m633259f[m fixed bug
+* [35m|[m [35m|[m [33mf446055[m Your changes to properties.ejs
+[35m|[m [35m|[m[35m/[m  
+[35m|[m[35m/[m[35m|[m   
+* [35m|[m [33m577d39e[m Jodit setup
+* [35m|[m [33m00993d3[m joditOff
+* [35m|[m [33m48a8bc2[m UnduPage
+* [35m|[m [33mdb472d5[m TagRemove
+* [35m|[m [33m8036c70[m JoditTest
+* [35m|[m [33mec08be7[m EditCdn Again
+* [35m|[m [33ma0b8ed6[m edit cdn
+* [35m|[m [33m370fa30[m description edit
+* [35m|[m [33m9df2a0b[m Description Jodit Added
+* [35m|[m [33m56d9d0e[m removeBlogRoute
+* [35m|[m [33mf84d1ed[m RemoveUpdate
+* [35m|[m [33m87abf38[m BloGAll
+* [35m|[m [33m851c69b[m EditBLog
+* [35m|[m [33mebe5f75[m RemoveEditBlog
+[35m|[m[35m/[m  
+*   [33m3f8f81a[m Merge branch 'main' of https://github.com/hrishikeshghosh/RealEstate-Backend
+[36m|[m[1;31m\[m  
+[36m|[m * [33mc5cee8c[m cgnerror
+[36m|[m * [33mbc4a0e6[m notSolveError
+[36m|[m * [33m82d14f0[m eroro
+[36m|[m * [33m2174d9e[m posst
+[36m|[m * [33mb86bc16[m kyapaata
+[36m|[m * [33m02b4785[m errorcome
+[36m|[m * [33mb810468[m namefix
+[36m|[m * [33mae5e571[m removeDot
+[36m|[m * [33mbac25c9[m Dot fix
+[36m|[m * [33m9ea3341[m cng4
+[36m|[m * [33m7c890ea[m cng3
+[36m|[m * [33m7281911[m cng2
+[36m|[m * [33m82062f3[m cng
+[36m|[m * [33mb865b15[m okkk
+[36m|[m * [33mdc0f40c[m chngsbl
+[36m|[m * [33m535d416[m tryyy
+[36m|[m * [33m33bf623[m removekuchh
+[36m|[m * [33m10b906a[m editpg
+[36m|[m * [33m7e93718[m changeb
+[36m|[m * [33m69129e8[m idd
+[36m|[m * [33m9327631[m editbuttonblog
+[36m|[m * [33m1fad2dd[m adminedit
+[36m|[m * [33ma7af031[m badalao
+[36m|[m * [33mebc4fcf[m home-edit
+[36m|[m * [33m760c056[m admin-logo
+[36m|[m * [33m25013c5[m kuchh to kiya
+[36m|[m * [33mffd7230[m Models
+[36m|[m * [33m15d98aa[m fix String URL
+[36m|[m * [33mfe1bca7[m blogTitleFix
+[36m|[m * [33m951b544[m change on
+[36m|[m * [33m63717e5[m remove kuchh to
+[36m|[m * [33ma50744f[m image off
+[36m|[m * [33ma1c7b9b[m loop on
+[36m|[m * [33m03ac206[m onemore
+[36m|[m * [33m4f0ba87[m one more
+[36m|[m * [33mbb5a78e[m more div remove
+[36m|[m * [33md1934ea[m div remove
+[36m|[m * [33m60283e2[m image fix2
+[36m|[m * [33m584c25b[m Image fix
+[36m|[m * [33m50d2ccf[m user types fix
+[36m|[m * [33m30af8e1[m OffPlan
+[36m|[m * [33m2d68ee6[m user update
+* [1;31m|[m [33mb2f17ab[m Fixed 413 error
+[1;31m|[m[1;31m/[m  
+* [33m6e30198[m added s3 config for image storage
+* [33m426ede5[m Update readme
+* [33m86d8074[m Create node.js.yml
+* [33me13f790[m Fixed All API Endpoints
+* [33ma71b891[m Initial Commit

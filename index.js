@@ -284,7 +284,7 @@ console.log(req.files)
     } catch (error) {
       console.error("Error uploading property:", error);
       // res.status(500).send("Error uploading property" + error);
-      res.status(500).send({message:"Error uploading property" , error});
+      res.status(500).send({message:"Error uploading property nhi ho rhi " , error});
     }
   }
 );

@@ -281,10 +281,25 @@ console.log(req.files)
       console.log("Property saved successfully!", property);
       // res.status(201).json({message:"Property uploaded successfully!", redirect:"/properties"});
       res.redirect("/properties");
-    } catch (error) {
-      console.error("Error uploading property:-------------->", error);
-      // res.status(500).send("Error uploading property" + error);
-      res.status(500).send({message:"Error uploading property nhi ho rhi " , error});
+    // } catch (error) {
+    //   console.error("Error uploading property:-------------->", error);
+    //   // res.status(500).send("Error uploading property" + error);
+    //   res.status(500).send({message:"Error uploading property nhi ho rhi " , error});
+    // }
+    }catch (error) {}
+  // Log detailed error information for debugging
+  console.error("--- ERROR UPLOADING PROPERTY ---");
+  console.error("Timestamp:", new Date().toISOString());
+  console.error("Error Name:", error.name); // e.g., 'ValidationError', 'S3ServiceException'
+  console.error("Error Message:", error.message);
+  console.error("Full Error Object:", error);
+  console.error("--- END ERROR ---");
+
+  res.status(502).send({
+    message: "Error uploading property",
+    error: {
+      name: error.name,
+      message: error.message
     }
   }
 );

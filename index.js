@@ -282,7 +282,7 @@ console.log(req.files)
       // res.status(201).json({message:"Property uploaded successfully!", redirect:"/properties"});
       res.redirect("/properties");
     } catch (error) {
-      console.error("Error uploading property:", error);
+      console.error("Error uploading property:-------------->", error);
       // res.status(500).send("Error uploading property" + error);
       res.status(500).send({message:"Error uploading property nhi ho rhi " , error});
     }

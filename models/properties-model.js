@@ -14,7 +14,7 @@ const PropertySchema = new mongoose.Schema({
                                                        
   mainCategory: { 
     type: String, 
-    enum: ["Lease", "Residential", "Commercial", "OffPlan"], 
+    // enum: ["Lease", "Residential", "Commercial", "OffPlan"], 
     required: true 
   }, // Main category
   subCategory: { 

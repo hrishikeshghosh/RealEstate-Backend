@@ -473,9 +473,30 @@ app.get("/api/properties", async (req, res) => {
     res.status(500).json({ message: "Error fetching properties" });
   }
 });
+// GET a single property by ID
+app.get("/api/properties/:id", async (req, res) => {
+  try {
+    // Find the property in the database using the ID from the URL parameter
+    const property = await propertyModel.findById(req.params.id);
 
+    // If no property is found with that ID, return a 404 (Not Found) error
+    if (!property) {
+      return res.status(404).json({ message: "Property not found" });
+    }
 
-app.get("/api/properties/rent", async (req, res) => {
+    // If the property is found, send it back as JSON with a 200 (OK) status
+    res.status(200).json(property);
+
+  } catch (error) {
+    // Log the error for debugging purposes on the server
+    console.error("Error fetching property by ID:", error);
+    
+    // Send a 500 (Internal Server Error) response if something goes wrong
+    res.status(500).json({ message: "Error fetching property details", error: error.message });
+  }
+});
+
+app.get("/api/properties/category-rent/rent", async (req, res) => {
   console.log("👉 RENT API HIT");
   try {
     const properties = await propertyModel.find({
@@ -490,7 +511,7 @@ app.get("/api/properties/rent", async (req, res) => {
 });
 
 
-app.get("/api/properties/residential", async (req, res) => {
+app.get("/api/properties/category-residential/residential", async (req, res) => {
   try {
     const properties = await propertyModel.find({
       mainCategory: "Residential",
@@ -502,7 +523,7 @@ app.get("/api/properties/residential", async (req, res) => {
     res.status(500).json({ message: "Error fetching properties" });
   }
 });
-app.get("/api/properties/commercial", async (req, res) => {
+app.get("/api/properties/category-commercial/commercial", async (req, res) => {
   try {
     const properties = await propertyModel.find({ mainCategory: "Commercial" });
     // console.log(properties)
@@ -512,7 +533,7 @@ app.get("/api/properties/commercial", async (req, res) => {
     res.status(500).json({ message: "Error fetching properties" });
   }
 });
-app.get("/api/properties/off-plan", async (req, res) => {
+app.get("/api/properties/category-offplan/off-plan", async (req, res) => {
   try {
     const properties = await propertyModel.find({ mainCategory: "OffPlan" });
     // console.log(properties)
@@ -566,7 +587,7 @@ app.get("/users", async (req, res) => {
 
 app.post("/api/search-properties", async (req, res) => {
   const { query, type } = req.body;
-
+console.log(req.body)
   const filters = {};
 
   if (query) {
@@ -582,6 +603,7 @@ app.post("/api/search-properties", async (req, res) => {
 
   try {
     const properties = await propertyModel.find(filters);
+    console.log(properties)
     res.json(properties);
   } catch (error) {
     console.error("Error fetching properties:", error);

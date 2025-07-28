@@ -32,9 +32,9 @@ const s3 = new S3Client({
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
-app.use(express.json());
+app.use(express.json({limit: "20mb"}));
 app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ limit: "20mb" ,extended: true }));
 
 // app.use("/images/uploads/properties", express.static(path.join(__dirname, "public/images/uploads/properties")));
 // app.use("/images/uploads/blogs", express.static(path.join(__dirname, "public/images/uploads/blogs")));
